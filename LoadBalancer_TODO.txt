@@ -1,0 +1,24 @@
+Load balancing aglorithm
+	job queue (attribute of network singleton)
+	
+worker node completing job
+worker node returning completed job
+	load balancer decrementing worker.currentJobs by 1
+
+
+Check status of workers
+	in network, method "checkAllConnections()"
+		for each worker: worker.checkconnection()
+^requires some sort of "Message" class for load balancer to send something
+that is not a job or worker
+
+
+jobserver currently has manual run, auto (random). set up hard coded tests - 
+1. simple 10 requets with varied wait times.
+2. send requests with really long wait times
+3. send wait times of 0
+4. send wait times of negative numbers
+5. send things that are not jobs
+6. send millions of jobs
+
+ 

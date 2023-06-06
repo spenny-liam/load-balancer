@@ -28,8 +28,25 @@ class LoadBalancerRequestHandler extends Thread {
             System.out.println("Object Type Received: " + obj.getClass());
 
             if (obj.getClass() == Job.class) {
-                System.out.println(((Job) obj).getJobStatus());                
-                sendJobToNode("localhost", 4100, (Job)obj);
+                Job incomingJob = (Job) obj;
+                System.out.println(incomingJob.getJobStatus());
+                // handle differently depending if complete or new job
+                if(incomingJob.getJobStatus().equals("complete")){
+                    // iterate through all worker nodes
+                    for (int i = 0; i < Network.getInstance().getWorkers().size(); i++){
+                        WorkerNode worker = Network.getInstance().getWorkers().get(i);
+                        // find the workerNode of the job
+                        if(worker.getNodeID() == incomingJob.getWorker().getNodeID()) {
+                            // decrement worker.currentJobs by 1
+                            worker.removeJob();
+                        }
+                    }
+                } else if(incomingJob.getJobStatus().equals("new")){
+                    // adding job to queue
+                    Network.getInstance().addJob(incomingJob);
+                }
+                              
+                //sendJobToNode("localhost", 4100, (Job)obj);
             }
 
             if (obj.getClass() == WorkerNode.class) {
@@ -47,10 +64,10 @@ class LoadBalancerRequestHandler extends Thread {
                 
     }
     
-    private void sendJobToNode(String nodeIP, int nodePort, Job job){
+    private void sendJobToNode(WorkerNode worker, Job job){
         try {
                     //Creating socket with the address matching our Node.
-                    Socket socket = new Socket(nodeIP, nodePort);
+                    Socket socket = new Socket(worker.getNodeIP(), worker.getNodePort());
                     //Creating an output stream capable of taking a serialized object.
                     ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
                     //SEND the job over the created outputstream.

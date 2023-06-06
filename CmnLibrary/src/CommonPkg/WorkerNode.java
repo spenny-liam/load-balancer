@@ -48,6 +48,10 @@ public class WorkerNode implements java.io.Serializable {
         return this.nodePort;
     }
 
+    public String getNodeIP(){
+        return this.nodeIP;
+    }
+
     public void registerWithServer() {
         try {
             //Creating socket with the address matching our LoadBalancer.
@@ -65,12 +69,20 @@ public class WorkerNode implements java.io.Serializable {
         }
     }
     
-    public void addNewJobTime(int timeToAdd){
-        this.currentJobs = this.currentJobs + timeToAdd;
+    public void addNewJob(){
+        this.currentJobs = this.currentJobs + 1;
     }
     
-    public void removeJobTime(int timeToRemove){
-        this.currentJobs = this.currentJobs - timeToRemove;
+    public void removeJob(){
+        this.currentJobs = this.currentJobs - 1;
+    }
+
+    public int getNodeID(){
+        return this.nodeID;
+    }
+
+    public int getCurrentJobs(){
+        return this.currentJobs;
     }
 
 }

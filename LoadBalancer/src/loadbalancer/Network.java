@@ -2,6 +2,7 @@
 package loadbalancer;
 
 import CommonPkg.WorkerNode;
+import CommonPkg.Job;
 import java.util.ArrayList;
 
 
@@ -16,6 +17,7 @@ public class Network {
     private int serverPort = 4000;
     private ArrayList<WorkerNode> workers = new ArrayList<WorkerNode>();
     private LoadBalancerSocketServer server = new LoadBalancerSocketServer(serverPort);
+    private ArrayList<Job> jobQueue = new ArrayList<Job>();
     
     
     //Creating a Socket Server
@@ -43,6 +45,25 @@ public class Network {
         for(WorkerNode worker : workers){
             System.out.println(worker);
         }
+        return workers;
+    }
+
+    // add job to queue
+    public void addJob(Job job){
+        jobQueue.add(job);
+    }
+
+    public void getJobQueue(){
+        for(Job job : jobQueue){
+            System.out.println(job);
+        }
+        return jobQueue;
+    }
+
+    // remove job from queue
+    public void dequeueJob(){
+        Job job = jobQueue.get(0);
+        jobQueue.remove(0);
     }
     
     

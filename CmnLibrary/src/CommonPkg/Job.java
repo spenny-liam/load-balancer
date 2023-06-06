@@ -8,6 +8,8 @@ public class Job implements java.io.Serializable {
     int jobTime;
     //Status of the job
     String jobStatus;
+    //Worker the job has been sent to
+    WorkerNode worker;
     
     //Constructor method
     public Job(int newJobID, int newJobTime){
@@ -20,8 +22,25 @@ public class Job implements java.io.Serializable {
     
     //Sets the jobStatus attribute
     public void setJobStatus(String newStatus){
-        this.jobStatus = newStatus;
+        // check status is valid option
+        if(newStatus.equals("new" || newStatus.equals("complete"))){
+            this.jobStatus = newStatus;
+        } else {
+            throw new Exception("Not a valid job status");
+        }
+        
     }
+
+    // set worker
+    public void setWorker(WorkerNode worker){
+        this.worker = worker;
+    }
+
+    // get worker
+    public WorkerNode getWorker(){
+        return this.worker;
+    }
+    
     //Gets the jobStatus attribute
     public String getJobStatus(){
         System.out.println("Returning ID" + this.jobID

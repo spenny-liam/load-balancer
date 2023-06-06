@@ -64,6 +64,7 @@ public class Network {
     public void dequeueJob(){
         Job job = jobQueue.get(0);
         jobQueue.remove(0);
+        return job;
     }
     
     

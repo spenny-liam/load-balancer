@@ -41,19 +41,20 @@ public class Network {
     }
     
     //Retrieve the current ArrayList of worker nodes
-    public void getWorkers(){
-        for(WorkerNode worker : workers){
-            System.out.println(worker);
-        }
+    public ArrayList<WorkerNode> getWorkers(){
+        //for(WorkerNode worker : workers){
+        //    System.out.println(worker);
+        //}
         return workers;
     }
 
     // add job to queue
     public void addJob(Job job){
         jobQueue.add(job);
+        System.out.println("new job added to queue");
     }
 
-    public void getJobQueue(){
+    public ArrayList<Job> getJobQueue(){
         for(Job job : jobQueue){
             System.out.println(job);
         }
@@ -61,9 +62,10 @@ public class Network {
     }
 
     // remove job from queue
-    public void dequeueJob(){
+    public Job dequeueJob(){
         Job job = jobQueue.get(0);
         jobQueue.remove(0);
+        return job;
     }
     
     

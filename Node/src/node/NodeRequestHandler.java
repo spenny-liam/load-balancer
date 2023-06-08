@@ -6,6 +6,7 @@ package node;
 
 import java.net.Socket;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import CommonPkg.Job;
 
 class NodeRequestHandler extends Thread {
@@ -31,15 +32,15 @@ class NodeRequestHandler extends Thread {
 
             if (obj.getClass() == Job.class) {
                 Job incomingJob = (Job) obj;
-                Thread.sleep(getJobTime * 1000);
-                job.setJobStatus("complete");
+                Thread.sleep(incomingJob.getJobTime() * 1000);
+                incomingJob.setJobStatus("complete");
                 try {
                     //Creating socket with the address matching our LoadBalancer.
                     Socket socket = new Socket("localhost", 4000);
                     //Creating an output stream capable of taking a serialized object.
                     ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
                     //SEND the Node over the created outputstream.
-                    out.writeObject(job);
+                    out.writeObject(incomingJob);
                     System.out.println("job complete.");
                     //Close the socket after usage.
                     socket.close();

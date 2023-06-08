@@ -21,6 +21,10 @@ public class WorkerNode implements java.io.Serializable {
         maxJobs = newMaxJobs;
     }
     
+    public WorkerNode() {
+        
+    }
+    
     //Override toString() so that within our Network class we have more 
     //operable ArrayList to play around with.
     @Override
@@ -83,6 +87,10 @@ public class WorkerNode implements java.io.Serializable {
 
     public int getCurrentJobs(){
         return this.currentJobs;
+    }
+
+    public int getMaxJobs(){
+        return this.maxJobs;
     }
 
 }

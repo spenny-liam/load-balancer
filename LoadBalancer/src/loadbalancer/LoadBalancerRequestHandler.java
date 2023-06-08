@@ -29,7 +29,6 @@ class LoadBalancerRequestHandler extends Thread {
 
             if (obj.getClass() == Job.class) {
                 Job incomingJob = (Job) obj;
-                System.out.println(incomingJob.getJobStatus());
                 // handle differently depending if complete or new job
                 if(incomingJob.getJobStatus().equals("complete")){
                     // iterate through all worker nodes
@@ -62,23 +61,6 @@ class LoadBalancerRequestHandler extends Thread {
             e.printStackTrace();
         }        
                 
-    }
-    
-    private void sendJobToNode(WorkerNode worker, Job job){
-        try {
-                    //Creating socket with the address matching our Node.
-                    Socket socket = new Socket(worker.getNodeIP(), worker.getNodePort());
-                    //Creating an output stream capable of taking a serialized object.
-                    ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
-                    //SEND the job over the created outputstream.
-                    out.writeObject(job);
-                    System.out.println("Job Object (ID:" + job.getJobID() + ") passed to Node.");
-                    //Close the socket after usage.
-                    socket.close();
-
-                } catch (Exception error) {
-                    error.printStackTrace();
-                }
     }
     
     

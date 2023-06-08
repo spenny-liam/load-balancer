@@ -22,13 +22,17 @@ public class Job implements java.io.Serializable {
     
     //Sets the jobStatus attribute
     public void setJobStatus(String newStatus){
-        // check status is valid option
-        if(newStatus.equals("new" || newStatus.equals("complete"))){
-            this.jobStatus = newStatus;
-        } else {
-            throw new Exception("Not a valid job status");
+        try{
+            // check status is valid option
+            if(newStatus.equals("new") || newStatus.equals("complete")){
+                this.jobStatus = newStatus;
+            } else {
+                throw new Exception("Not a valid job status");
+            }
+        }catch (Exception error) {
+            error.printStackTrace();
         }
-        
+
     }
 
     // set worker
